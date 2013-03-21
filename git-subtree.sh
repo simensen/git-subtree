@@ -161,6 +161,11 @@ cache_miss()
 	done
 }
 
+cache_cleanup()
+{
+	rm -rf "$cachedir" || die "Can't delete cachedir: $cachedir"
+}
+
 check_parents()
 {
 	missed=$(cache_miss $*)
@@ -638,6 +643,7 @@ cmd_split()
 		say "$action branch '$branch'"
 	fi
 	echo $latest_new
+	cache_cleanup || exit $?
 	exit 0
 }
 
